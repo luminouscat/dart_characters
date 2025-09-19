@@ -15,11 +15,15 @@ class CharacterCard extends StatelessWidget {
         padding: const EdgeInsets.all(25.0),
         child: Row(
           children: <Widget>[
-            Image.asset(
-              'assets/img/vocations/${character.vocation.image}',
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
+            Hero(
+              tag: character.id.toString(),
+              // animates this image Hero to the Profile Image widget Hero
+              child: Image.asset(
+                'assets/img/vocations/${character.vocation.image}',
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 20),
             Column(

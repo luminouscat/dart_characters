@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_characters/models/character.dart';
+import 'package:flutter_characters/screens/profile/heart.dart';
 import 'package:flutter_characters/screens/profile/skill_list.dart';
 import 'package:flutter_characters/screens/profile/stats_table.dart';
 import 'package:flutter_characters/services/character_store.dart';
@@ -22,34 +23,47 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             // basic description
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: AppColors.secondaryColor.withValues(alpha: 0.3),
-              child: Row(
-                children: <Widget>[
-                  Image.asset(
-                    'assets/img/vocations/${character.vocation.image}',
-                    width: 140,
-                    height: 140,
-                    fit: BoxFit.cover,
+            Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  color: AppColors.secondaryColor.withValues(alpha: 0.3),
+                  child: Row(
+                    children: <Widget>[
+                      Hero(
+                        tag: character.id.toString(),
+                        child: Image.asset(
+                          'assets/img/vocations/${character.vocation.image}',
+                          width: 140,
+                          height: 140,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            StyledText(character.name),
+                            StyledText(character.vocation.title),
+                            StyledText(character.slogan),
+                            // use expanded if overflow occurs
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        StyledText(character.name),
-                        StyledText(character.vocation.title),
-                        StyledText(
-                          character.slogan,
-                        ), // use expanded if overflow occurs
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                // is favorite
+                Positioned(
+                  top: 10,
+                  right: 10,
+
+                  child: Heart(character: character),
+                ),
+              ],
             ),
 
             // weapon and ability -> comes from vocation
@@ -80,10 +94,6 @@ class Profile extends StatelessWidget {
             ),
 
             // stats and skills
-            const SizedBox(height: 20),
-            Center(
-              child: Icon(Icons.code, color: AppColors.primaryColor, size: 30),
-            ),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Container(

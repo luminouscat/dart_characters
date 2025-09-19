@@ -44,8 +44,19 @@ class _HomeState extends State<Home> {
                       shrinkWrap: true,
                       itemCount: value.characters.length,
                       itemBuilder: (context, index) {
-                        return CharacterCard(
-                          character: value.characters[index],
+                        return Dismissible(
+                          key: ValueKey(
+                            value.characters[index].id,
+                          ), // we need this bcs it's to identify the list of items, a unique value
+                          onDismissed: (direction) {
+                            Provider.of<CharacterStore>(
+                              context,
+                              listen: false,
+                            ).removeCharacter(value.characters[index]);
+                          },
+                          child: CharacterCard(
+                            character: value.characters[index],
+                          ),
                         );
                       },
                     );

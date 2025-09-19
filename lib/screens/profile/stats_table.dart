@@ -13,6 +13,7 @@ class StatsTable extends StatefulWidget {
 }
 
 class _StatsTableState extends State<StatsTable> {
+  double turns = 0.0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,15 +26,19 @@ class _StatsTableState extends State<StatsTable> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: <Widget>[
-                Icon(
-                  Icons.star,
-                  color:
-                      (widget.character?.points ?? 0) > 0
-                          ? Colors.yellow
-                          : Colors.grey,
-                  // So (widget.character?.points ?? 0) means:
-                  // If widget.character?.points is not null, use that value
-                  // If widget.character?.points is null, use 0 instead
+                AnimatedRotation(
+                  turns: turns,
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    Icons.star,
+                    color:
+                        (widget.character?.points ?? 0) > 0
+                            ? Colors.yellow
+                            : Colors.grey,
+                    // So (widget.character?.points ?? 0) means:
+                    // If widget.character?.points is not null, use that value
+                    // If widget.character?.points is null, use 0 instead
+                  ),
                 ),
                 const SizedBox(width: 20),
                 const StyledText('Stats point available:'),
@@ -86,6 +91,7 @@ class _StatsTableState extends State<StatsTable> {
                                 return; // Exit the function early
                               }
                               widget.character?.increaseStat(stat['title']!);
+                              turns += 0.25;
                             });
                           },
                           icon: const Icon(Icons.arrow_upward),
@@ -112,6 +118,7 @@ class _StatsTableState extends State<StatsTable> {
                                 return; // Exit the function early
                               }
                               widget.character?.decreaseStat(stat['title']!);
+                              turns -= 0.25;
                             });
                           },
                           icon: const Icon(Icons.arrow_downward),
