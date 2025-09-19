@@ -91,6 +91,3 @@ class Character with Stats {
     return character;
   }
 }
-
-// dummy data
-List<Character> characters = [];
