@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_characters/models/character.dart';
 import 'package:flutter_characters/screens/profile/skill_list.dart';
 import 'package:flutter_characters/screens/profile/stats_table.dart';
+import 'package:flutter_characters/services/character_store.dart';
 import 'package:flutter_characters/shared/styled_button.dart';
 import 'package:flutter_characters/shared/styled_text.dart';
 import 'package:flutter_characters/theme.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key, required this.character});
@@ -115,6 +117,10 @@ class Profile extends StatelessWidget {
             StyledButtonOne(
               child: StyledHeadline('Save Character'),
               onPressed: () {
+                Provider.of<CharacterStore>(
+                  context,
+                  listen: false,
+                ).saveCharacter(character);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     showCloseIcon: true,
