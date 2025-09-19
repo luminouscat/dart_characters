@@ -25,7 +25,11 @@ class FirestoreService {
   static Future<QuerySnapshot<Character>> getCharactersOnce() {
     return ref.get();
   }
+
   // update
+  static Future<QuerySnapshot<Character>> updateCharacter() {
+    return ref.get();
+  }
 
   // delete
 }
